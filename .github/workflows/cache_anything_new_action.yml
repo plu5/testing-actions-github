@@ -20,4 +20,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: sytem_file.txt
-          path: sytem_file.txt
+          path: ${{ runner.temp }}/sytem_file.txt
