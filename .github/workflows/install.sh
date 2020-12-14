@@ -2,6 +2,5 @@
 
 echo "*** INIT: Install script"
 sudo apt update
-sudo apt install -y vim wget bash-completion
-sudo apt upgrade -y
+sudo apt install -y pandoc
 echo "*** END: Install script"
