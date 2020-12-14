@@ -16,8 +16,6 @@ jobs:
         id: cache-anything-new-action
         with:
           version: 'v5.21653'
-        run: |
-          echo "*** Running airvzxf/cache-anything-new-action"
 
       - uses: actions/upload-artifact@v2
         with:
