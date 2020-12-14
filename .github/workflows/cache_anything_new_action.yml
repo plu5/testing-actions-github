@@ -13,6 +13,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - id: cache-anything-new-action
-        uses: airvzxf/cache-anything-new-action@master
+        uses: airvzxf/cache-anything-new-action@main
         with:
           version: 'v5.21653'
