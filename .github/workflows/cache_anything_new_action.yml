@@ -19,5 +19,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: system_file.txt
-          path: ${{ runner.temp }}/system_file.txt
+          name: system_files
+          path: ${{ runner.temp }}/system_files*.txt
