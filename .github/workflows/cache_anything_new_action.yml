@@ -15,4 +15,4 @@ jobs:
       - id: cache-anything-new-action
         uses: airvzxf/cache-anything-new-action@master
         with:
-          version: 'v5.21651'
+          version: 'v5.21652'
