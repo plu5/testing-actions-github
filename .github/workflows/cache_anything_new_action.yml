@@ -12,10 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Before cache
+        run: |
+          echo "*** Before cache"
+
       - uses: airvzxf/cache-anything-new-action@main
         id: cache-anything-new-action
         with:
           version: 'v5.21653'
+
+      - name: After cache
+        run: |
+          echo "*** After cache"
 
       - uses: actions/upload-artifact@v2
         with:
