@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - id: cache-anything-new-action
-        uses: airvzxf/cache-anything-new-action@main
+      - uses: airvzxf/cache-anything-new-action@main
+        id: cache-anything-new-action
         with:
           version: 'v5.21653'
