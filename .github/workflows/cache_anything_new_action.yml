@@ -21,6 +21,7 @@ jobs:
         with:
           ideifier: '/bin'
           version: 'v5.21653'
+          script: './install.sh'
 
       - name: After cache
         run: |
