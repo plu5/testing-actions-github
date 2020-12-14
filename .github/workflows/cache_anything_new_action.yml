@@ -19,8 +19,8 @@ jobs:
       - uses: airvzxf/cache-anything-new-action@main
         id: cache-anything-new-action
         with:
-          identifier: '/bin'
           version: 'v5.21653'
+          directory: '/bin'
           script: './install.sh'
 
       - name: After cache
