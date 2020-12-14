@@ -1,4 +1,4 @@
-name: CI - Testing GitHub Actions
+name: CI - Testing Cache Anything New | Action
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ jobs:
   testing_actions:
     runs-on: ubuntu-18.04
 
-    name: Test GitHub Actions
+    name: Testing Actions | Job
 
     steps:
       - uses: actions/checkout@v2
