@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3fb981d4-dad6-41d4-a19b-0e7e26823172" name="Default Changelist" comment="Added test action for Cache Anything New.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3fb981d4-dad6-41d4-a19b-0e7e26823172" name="Default Changelist" comment="Added test action for Cache Anything New." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +69,7 @@
       <workItem from="1607911022119" duration="249000" />
       <workItem from="1607911274528" duration="59000" />
       <workItem from="1607911348148" duration="70000" />
-      <workItem from="1607911433222" duration="316000" />
+      <workItem from="1607911433222" duration="726000" />
     </task>
     <task id="LOCAL-00001" summary="Added Git ignore and the IntelliJ files.">
       <created>1607909117608</created>
