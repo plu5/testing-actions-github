@@ -11,8 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        run: |
-          echo "*** Running actions/checkout"
 
       - uses: airvzxf/cache-anything-new-action@main
         id: cache-anything-new-action
@@ -22,8 +20,6 @@ jobs:
           echo "*** Running airvzxf/cache-anything-new-action"
 
       - uses: actions/upload-artifact@v2
-        run: |
-          echo "*** Running actions/upload-artifact"
         with:
           name: system_files
           path: ${{ runner.temp }}/system_files*.txt
