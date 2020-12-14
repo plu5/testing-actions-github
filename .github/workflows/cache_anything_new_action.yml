@@ -1,0 +1,17 @@
+name: CI - Testing GitHub Actions
+
+on: [ push ]
+
+jobs:
+  testing_actions:
+    runs-on: ubuntu-18.04
+
+    name: Test GitHub Actions
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - id: cache-anything-new-action
+        uses: airvzxf/cache-anything-new-action@master
+        with:
+          version: 'v5.2165'
