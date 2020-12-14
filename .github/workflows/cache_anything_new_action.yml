@@ -16,3 +16,8 @@ jobs:
         id: cache-anything-new-action
         with:
           version: 'v5.21653'
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: sytem_file.txt
+          path: sytem_file.txt
