@@ -19,6 +19,7 @@ jobs:
       - uses: airvzxf/cache-anything-new-action@main
         id: cache-anything-new-action
         with:
+          ideifier: '/bin'
           version: 'v5.21653'
 
       - name: After cache
