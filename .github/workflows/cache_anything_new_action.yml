@@ -15,6 +15,28 @@ jobs:
       - name: Before cache
         run: |
           echo "*** Before cache"
+          ls -lha /home/runner/work/_temp/
+          ls -lhaR /home/runner/work/_temp/
+
+      - name: Cache Primes
+        id: cache-wolf-primes-id
+        uses: actions/cache@v2
+        with:
+          path: cache-wolf-primes-path
+          key: cache-wolf-primes-key
+
+      - name: Generate Prime Numbers
+        if: steps.cache-wolf-primes-key.outputs.cache-hit != 'true'
+        run: |
+          ls -lha cache-wolf-primes-path
+          ls -lha /home/runner/work/_temp/
+          ls -lhaR /home/runner/work/_temp/
+
+      - name: Use Prime Numbers
+        run: |
+          echo "Hello!" > cache-wolf-primes-path
+          ls -lha /home/runner/work/_temp/
+          ls -lhaR /home/runner/work/_temp/
 
       - uses: airvzxf/cache-anything-new-action@main
         id: cache-anything-new-action
