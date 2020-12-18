@@ -23,10 +23,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: cache-wolf-primes-path
-          key: cache-wolf-primes-key
+          key: ${{ runner.os }}-cache-wolf-primes-key
 
       - name: Generate Prime Numbers
-        if: steps.cache-wolf-primes-key.outputs.cache-hit != 'true'
+        if: steps.cache-wolf-primes-id.outputs.cache-hit != 'true'
         run: |
           ls -lha cache-wolf-primes-path
           ls -lha /home/runner/work/_temp/
