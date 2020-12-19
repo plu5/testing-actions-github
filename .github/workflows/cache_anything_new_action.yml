@@ -16,6 +16,9 @@ jobs:
         run: |
           echo "*** Before cache"
           ls -lhaR /home/runner/work/_temp/
+          find /home/ -iname manifest.txt 2> /dev/null || true
+          find /home/ -iname cache.tzst 2> /dev/null || true
+          find /home/ -iname *prime* 2> /dev/null || true
           cat /home/runner/work/_temp/*.sh
 
       - name: Cache Primes
