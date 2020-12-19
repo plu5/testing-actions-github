@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: cache-wolf-primes-path
-          key: ${{ runner.os }}-cache-wolf-primes-key-v1.0
+          key: ${{ runner.os }}-cache-wolf-primes-key-v1.1
 
       - name: Generate Prime Numbers
         if: steps.cache-wolf-primes-id.outputs.cache-hit != 'true'
