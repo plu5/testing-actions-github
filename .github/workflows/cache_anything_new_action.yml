@@ -50,3 +50,4 @@ jobs:
           echo "*** After cache"
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
+          find /home/ -iname *primes* 2> /dev/null || true
