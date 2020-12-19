@@ -36,12 +36,18 @@ jobs:
           ls -lha cache-wolf-primes-path
           cat /home/runner/work/_temp/*.sh
           ls -lha /home/runner/work/testing-actions-github/testing-actions-github/
+          find /home/ -iname manifest.txt 2> /dev/null || true
+          find /home/ -iname cache.tzst 2> /dev/null || true
+          find /home/ -iname *prime* 2> /dev/null || true
 
       - name: Use Prime Numbers
         run: |
           ls -lha cache-wolf-primes-path
           ls -lhaR /home/runner/work/_temp/
           cat /home/runner/work/_temp/*.sh
+          find /home/ -iname manifest.txt 2> /dev/null || true
+          find /home/ -iname cache.tzst 2> /dev/null || true
+          find /home/ -iname *prime* 2> /dev/null || true
 
       - uses: airvzxf/cache-anything-new-action@main
         id: cache-anything-new-action
