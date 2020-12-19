@@ -16,7 +16,7 @@ jobs:
         run: |
           echo "*** Before cache"
           ls -lhaR /home/runner/work/_temp/
-          cat *.sh
+          cat /home/runner/work/_temp/*.sh
 
       - name: Cache Primes
         id: cache-wolf-primes-id
@@ -31,13 +31,13 @@ jobs:
           ls -lhaR /home/runner/work/_temp/
           echo "Hello!" > cache-wolf-primes-path
           ls -lha cache-wolf-primes-path
-          cat *.sh
+          cat /home/runner/work/_temp/*.sh
 
       - name: Use Prime Numbers
         run: |
           ls -lha cache-wolf-primes-path
           ls -lhaR /home/runner/work/_temp/
-          cat *.sh
+          cat /home/runner/work/_temp/*.sh
 
       - uses: airvzxf/cache-anything-new-action@main
         id: cache-anything-new-action
@@ -51,4 +51,4 @@ jobs:
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
           find /home/ -iname *prime* 2> /dev/null || true
-          cat *.sh
+          cat /home/runner/work/_temp/*.sh
