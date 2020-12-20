@@ -9,11 +9,11 @@ jobs:
 
     name: Testing Actions | Job
 
-    steps:
-      - env:
-          ENV_RUNNER_TEMP: ${{ runner.temp }}
-          ENV_SCRIPT_BASE: ${{ github.workspace }}
+    env:
+      ENV_RUNNER_TEMP: ${{ runner.temp }}
+      ENV_SCRIPT_BASE: ${{ github.workspace }}
 
+    steps:
       - uses: actions/checkout@v2
 
       - name: Before cache
