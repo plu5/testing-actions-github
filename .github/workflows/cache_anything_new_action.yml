@@ -10,12 +10,16 @@ jobs:
     name: Testing Actions | Job
 
     steps:
+      - env:
+          ENV_RUNNER_TEMP: ${{ runner.temp }}
+          ENV_SCRIPT_BASE: ${{ github.workspace }}
+
       - uses: actions/checkout@v2
 
       - name: Before cache
         run: |
           echo "*** Before cache"
-          ls -lhaR /home/runner/work/_temp/
+          ls -lhaR "${ENV_RUNNER_TEMP}"
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
           find /home/ -iname *prime* 2> /dev/null || true
@@ -30,10 +34,10 @@ jobs:
       - name: Generate Prime Numbers
         if: steps.cache-wolf-primes-id.outputs.cache-hit != 'true'
         run: |
-          ls -lhaR /home/runner/work/_temp/
+          ls -lhaR "${ENV_RUNNER_TEMP}"
           echo "Hello!" > cache-wolf-primes-path
           ls -lha cache-wolf-primes-path
-          ls -lha /home/runner/work/testing-actions-github/testing-actions-github/
+          ls -lha "${ENV_SCRIPT_BASE}"
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
           find /home/ -iname *prime* 2> /dev/null || true
@@ -41,7 +45,7 @@ jobs:
       - name: Use Prime Numbers
         run: |
           ls -lha cache-wolf-primes-path
-          ls -lhaR /home/runner/work/_temp/
+          ls -lhaR "${ENV_RUNNER_TEMP}"
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
           find /home/ -iname *prime* 2> /dev/null || true
