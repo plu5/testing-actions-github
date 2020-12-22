@@ -17,7 +17,8 @@ jobs:
           ENV_RUNNER_TEMP: ${{ runner.temp }}
         run: |
           echo "*** Before cache"
-          ls -lhaR "${ENV_RUNNER_TEMP}"
+          whereis zstd
+          ls -lha "${ENV_RUNNER_TEMP}"
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
           find /home/ -iname *prime* 2> /dev/null || true
@@ -35,7 +36,8 @@ jobs:
           ENV_RUNNER_TEMP: ${{ runner.temp }}
           ENV_SCRIPT_BASE: ${{ github.workspace }}
         run: |
-          ls -lhaR "${ENV_RUNNER_TEMP}"
+          whereis zstd
+          ls -lha "${ENV_RUNNER_TEMP}"
           echo "Hello!" > cache-wolf-primes-path
           ls -lha cache-wolf-primes-path
           ls -lha "${ENV_SCRIPT_BASE}"
@@ -47,8 +49,9 @@ jobs:
         env:
           ENV_RUNNER_TEMP: ${{ runner.temp }}
         run: |
+          whereis zstd
           ls -lha cache-wolf-primes-path
-          ls -lhaR "${ENV_RUNNER_TEMP}"
+          ls -lha "${ENV_RUNNER_TEMP}"
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
           find /home/ -iname *prime* 2> /dev/null || true
@@ -62,6 +65,7 @@ jobs:
       - name: After cache
         run: |
           echo "*** After cache"
+          whereis zstd
           find /home/ -iname manifest.txt 2> /dev/null || true
           find /home/ -iname cache.tzst 2> /dev/null || true
           find /home/ -iname *prime* 2> /dev/null || true
