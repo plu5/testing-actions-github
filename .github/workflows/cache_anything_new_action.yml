@@ -25,7 +25,7 @@ jobs:
 
       - name: Cache Primes
         id: cache-wolf-primes-id
-        uses: actions/cache@v2
+        uses: airvzxf/cache@logs
         with:
           path: cache-wolf-primes-path
           key: ${{ runner.os }}-cache-wolf-primes-key-v1.1
