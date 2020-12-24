@@ -54,7 +54,6 @@ jobs:
           pwd
           echo "SOURCE: ${SOURCE}"
           ls -lha /
-          sudo du -h -d 1 / 2> /dev/null || true
           echo "# --------------------------------------------------------"
           echo "# APT update"
           sudo apt update
