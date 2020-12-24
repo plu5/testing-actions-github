@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
 
       # Needs to execute the cache action
-      - name: Cache Hello World
+      - name: Step -> Cache Hello World
         id: cache-id # This ID will be use in the cache anything action.
         uses: actions/cache@v2
         with:
@@ -18,14 +18,16 @@ jobs:
           key: ${{ runner.os }}-cache-hello-world-key-v1.3
 
       # Implement the cache anything action, add a script which will be executed to be cached.
-      - uses: airvzxf/cache-anything-new-action@main
+      - name: Step -> Cache anything
+        uses: airvzxf/cache-anything-new-action@main
         with:
           version: 'v5.21653'
           script: './install.sh'
           snapshot: './'
           is_cached: ${{ steps.cache-id.outputs.cache-hit }} # Cache ID, check if the cache was hit.
 
-      - name: Use the cache
+      - name: Step -> Use the cache
         run: |
-          whereis pandoc
+          pwd
           find /home/ -iname hello.txt 2> /dev/null || true
+          whereis pandoc || true
