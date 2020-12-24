@@ -12,60 +12,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Before cache
-        env:
-          ENV_RUNNER_TEMP: ${{ runner.temp }}
-        run: |
-          echo "*** Before cache"
-          whereis zstd
-          ls -lha "${ENV_RUNNER_TEMP}"
-          find /home/ -iname manifest.txt 2> /dev/null || true
-          find /home/ -iname cache.tzst 2> /dev/null || true
-          find /home/ -iname *prime* 2> /dev/null || true
-
-      - name: Cache Primes
-        id: cache-wolf-primes-id
-        uses: airvzxf/cache@logs
+      # Needs to execute the cache action
+      - name: Cache Hello World
+        id: cache-hello-world-id
+        uses: actions/cache@v2
         with:
-          path: cache-wolf-primes-path
-          key: ${{ runner.os }}-cache-wolf-primes-key-v1.1
+          path: cache-hello-world-path
+          key: ${{ runner.os }}-cache-hello-world-key-v1.1
 
-      - name: Generate Prime Numbers
-        if: steps.cache-wolf-primes-id.outputs.cache-hit != 'true'
-        env:
-          ENV_RUNNER_TEMP: ${{ runner.temp }}
-          ENV_SCRIPT_BASE: ${{ github.workspace }}
-        run: |
-          whereis zstd
-          ls -lha "${ENV_RUNNER_TEMP}"
-          echo "Hello!" > cache-wolf-primes-path
-          ls -lha cache-wolf-primes-path
-          ls -lha "${ENV_SCRIPT_BASE}"
-          find /home/ -iname manifest.txt 2> /dev/null || true
-          find /home/ -iname cache.tzst 2> /dev/null || true
-          find /home/ -iname *prime* 2> /dev/null || true
-
-      - name: Use Prime Numbers
-        env:
-          ENV_RUNNER_TEMP: ${{ runner.temp }}
-        run: |
-          whereis zstd
-          ls -lha cache-wolf-primes-path
-          ls -lha "${ENV_RUNNER_TEMP}"
-          find /home/ -iname manifest.txt 2> /dev/null || true
-          find /home/ -iname cache.tzst 2> /dev/null || true
-          find /home/ -iname *prime* 2> /dev/null || true
-
+      # Implement the cache anything action, add a script which will be executed to be cached.
       - uses: airvzxf/cache-anything-new-action@main
-        id: cache-anything-new-action
         with:
           version: 'v5.21653'
           script: './install.sh'
 
-      - name: After cache
+      - name: Use the cache
         run: |
-          echo "*** After cache"
-          whereis zstd
-          find /home/ -iname manifest.txt 2> /dev/null || true
-          find /home/ -iname cache.tzst 2> /dev/null || true
-          find /home/ -iname *prime* 2> /dev/null || true
+          whereis pandoc
+          find /home/ -iname hello.txt 2> /dev/null || true
