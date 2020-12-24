@@ -137,23 +137,3 @@ jobs:
           ls -lha "${SOURCE}"
           sudo cp --force --recursive "${SOURCE}"/. /
           echo "# --------------------------------------------------------"
-
-      - name: Generate release files and commit in GitHub
-        run: |
-          echo "# --------------------------------------------------------"
-          echo "# Generating release files"
-          git fetch --all
-          git pull --rebase origin main
-          git checkout main
-          cd ./src/programming-from-the-ground-up
-          ./make.sh
-          cd ../../
-          ls -lha release/
-          git config --global user.name 'Israel Roldan'
-          git config --global user.email 'israel.alberto.rv@gmail.com'
-          git add .
-          git status
-          git commit -m "Automated Release."
-          git push
-          git status
-          echo "# --------------------------------------------------------"
