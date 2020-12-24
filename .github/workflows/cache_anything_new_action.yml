@@ -14,14 +14,14 @@ jobs:
         id: cache-id # This ID will be use in the cache anything action.
         uses: actions/cache@v2
         with:
-          path: ./
-          key: ${{ runner.os }}-cache-hello-world-key-v1.3
+          path: ${{ runner.temp }}/cache-directory # It always should be start with 'runner.temp'
+          key: ${{ runner.os }}-cache-hello-world-key-v1.4
 
       # Implement the cache anything action, add a script which will be executed to be cached.
+      # TODO: is_cached -> Try the steps[*] and see if it retrieve the correct steps. Added more cache steps before and after to validate that it's taking the correct.
       - name: Step -> Cache anything
         uses: airvzxf/cache-anything-new-action@main
         with:
-          version: 'v5.21653'
           script: './install.sh'
           snapshot: './'
           is_cached: ${{ steps.cache-id.outputs.cache-hit }} # Cache ID, check if the cache was hit.
