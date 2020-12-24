@@ -25,6 +25,7 @@ jobs:
           script: './install.sh'
           snapshot: './'
           is_cached: ${{ steps.cache-id.outputs.cache-hit }} # Cache ID, check if the cache was hit.
+          temporal: ${{ toJson(steps[*]) }}
 
       - name: Step -> Use the cache
         run: |
