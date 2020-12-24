@@ -36,7 +36,7 @@ jobs:
         id: cache-packages
         with:
           path: ${{ runner.temp }}/cache-linux
-          key: ${{ runner.os }}-cache-packages-v3.1
+          key: ${{ runner.os }}-cache-packages-v3.2
 
       - name: Install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
