@@ -1,23 +1,20 @@
 name: CI - Testing Cache Anything New | Action
-
 on:
   workflow_dispatch:
 
 jobs:
   testing_actions:
-    runs-on: ubuntu-18.04
-
     name: Testing Actions | Job
-
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
 
       # Needs to execute the cache action
       - name: Cache Hello World
-        id: cache-hello-world-id
+        id: cache-id # This ID will be use in the cache anything action.
         uses: actions/cache@v2
         with:
-          path: cache-hello-world-path
+          path: ./
           key: ${{ runner.os }}-cache-hello-world-key-v1.1
 
       # Implement the cache anything action, add a script which will be executed to be cached.
@@ -25,6 +22,8 @@ jobs:
         with:
           version: 'v5.21653'
           script: './install.sh'
+          snapshot: './'
+          is_cached: ${{ steps.cache-id.outputs.cache-hit }} # Cache ID, check if the cache was hit.
 
       - name: Use the cache
         run: |
