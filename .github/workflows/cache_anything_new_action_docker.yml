@@ -1,4 +1,4 @@
-name: CI - Testing Cache Anything New | Action
+name: CI - Testing Cache Anything New [in docker container]
 on:
   workflow_dispatch:
 
@@ -20,7 +20,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/cache-directory-example
-          key: cache-hello-world-key-v1.20
+          key: cache-hello-world-key-docker-v1.20
+          
+      - run: |
+          pwd
+          echo "${{ github.workspace }}"
 
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
