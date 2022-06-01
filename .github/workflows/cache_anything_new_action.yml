@@ -20,7 +20,7 @@ jobs:
           key: cache-hello-world-key-v1.20
           
       - run: |
-          cwd
+          pwd
           echo "${{ github.workspace }}"
 
       # Implement the cache anything action.
