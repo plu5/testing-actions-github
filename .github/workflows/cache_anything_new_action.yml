@@ -7,7 +7,7 @@ jobs:
     name: Testing Actions | Job
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # It is required to execute the cache action.
       #   id: It will be use in the cache anything action.
