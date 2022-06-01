@@ -18,6 +18,10 @@ jobs:
         with:
           path: ${{ runner.temp }}/cache-directory-example
           key: cache-hello-world-key-v1.20
+          
+      - run: |
+          cwd
+          echo "${{ github.workspace }}"
 
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
