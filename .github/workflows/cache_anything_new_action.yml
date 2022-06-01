@@ -17,7 +17,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/cache-directory-example
-          key: cache-hello-world-key-v1.10
+          key: cache-hello-world-key-v1.20
 
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
