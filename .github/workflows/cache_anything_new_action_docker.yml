@@ -10,7 +10,7 @@ jobs:
       image: 'ubuntu:16.04'
       options: --user 0
     steps:
-      - run: apt-get install -y git
+      - run: apt update && apt-get install -y git
       
       - uses: actions/checkout@v3
       
