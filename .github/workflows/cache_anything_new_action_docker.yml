@@ -10,11 +10,9 @@ jobs:
       image: 'ubuntu:16.04'
       options: --user 0
     steps:
-      - run: apt update && apt-get install -y git
-      
       - uses: actions/checkout@v3
       
-      - run: ls
+      - run: ls -A
 
       # It is required to execute the cache action.
       #   id: It will be use in the cache anything action.
