@@ -27,6 +27,9 @@ jobs:
       - run: |
           pwd
           echo "${{ github.workspace }}"
+          
+      - name: a hack which may or may not work
+        run: echo "${pwd}/.github/workflows/install.sh" > ${{ github.workspace }}/.github/workflows/install.sh
 
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
