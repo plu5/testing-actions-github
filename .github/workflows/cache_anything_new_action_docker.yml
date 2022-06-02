@@ -35,7 +35,10 @@ jobs:
           TOPATH=${{ github.workspace }}${SUBPATH}
           SCRIPTNAME="install.sh"
           mkdir -p ${TOPATH}
-          echo "${FROMPATH}${SCRIPTNAME}" > ${TOPATH}${SCRIPTNAME}
+          # echo "${FROMPATH}${SCRIPTNAME}" > ${TOPATH}${SCRIPTNAME}
+          echo 'echo "---- test ----"' > ${TOPATH}${SCRIPTNAME}
+          echo ${TOPATH}${SCRIPTNAME}
+          cat ${TOPATH}${SCRIPTNAME}
 
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
