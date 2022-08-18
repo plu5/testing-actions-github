@@ -42,9 +42,7 @@ jobs:
           
       - name: another hack which may or may not work
         run: |
-          sudo ()
-          "$@"
-          }
+          sudo() { "$@" ; }
           sudo echo hi
       
       - run: sudo echo hi
