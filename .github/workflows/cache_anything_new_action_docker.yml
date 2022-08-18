@@ -39,6 +39,15 @@ jobs:
           echo 'echo "---- test ----"' > ${TOPATH}${SCRIPTNAME}
           echo ${TOPATH}${SCRIPTNAME}
           cat ${TOPATH}${SCRIPTNAME}
+          
+      - name: another hack which may or may not work
+        run: |
+          sudo ()
+          "$@"
+          }
+          sudo echo hi
+      
+      - run: sudo echo hi
 
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
