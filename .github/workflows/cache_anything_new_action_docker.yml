@@ -41,9 +41,7 @@ jobs:
           cat ${TOPATH}${SCRIPTNAME}
           
       - name: another hack which may or may not work
-        run: |
-          sudo() { "$@" ; }
-          sudo echo hi
+        run: echo 'sudo() { "$@" ; }' >> /etc/profile
       
       - run: sudo echo hi
 
