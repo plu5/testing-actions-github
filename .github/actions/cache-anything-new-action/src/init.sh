@@ -1,6 +1,10 @@
 #!/bin/bash -e
 
-sudo() { "$@" ; }
+sudo ()
+{
+    [[ $EUID = 0 ]] || set -- command sudo "$@"
+    "$@"
+}
 
 echo "# ----------------------------------------------------------"
 echo "# Init the process"
