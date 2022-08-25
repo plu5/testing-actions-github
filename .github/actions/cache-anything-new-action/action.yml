@@ -1,0 +1,40 @@
+name: 'Cache Anything New'
+author: 'Israel Roldan <israel.alberto.rv@gmail.com>'
+description: >-
+  Catch a series of commands then it will check for the new files generated and it should cache those.
+inputs:
+  script:
+    description: 'Create your bash script to execute the commands. They will be generated files and it will stored in the cached.'
+    required: true
+  is_cached:
+    description: 'Boolean value to check if the cache was created.'
+    required: true
+  cache:
+    description: 'directory where the new detected files will be stored. It should be the same as the `actions/cache` `path`.'
+    required: true
+  snapshot:
+    description: 'The path of the scanner entry point, recommended the main path (/).'
+    required: false
+    default: '/'
+  exclude:
+    description: 'Exclude directories or files during the scanner. Separate with spaces ( ).'
+    required: false
+    default: '/boot /data /dev /mnt /proc /run /sys'
+
+runs:
+  using: 'composite'
+  steps:
+    - env:
+        ENV_IS_CACHED: ${{ inputs.is_cached }}
+        ENV_RUNNER_TEMP: ${{ runner.temp }}
+        ENV_CACHE: ${{ inputs.cache }}
+        ENV_SCRIPT_BASE: ${{ github.workspace }}/.github/workflows
+        ENV_SCRIPT: ${{ github.workspace }}/.github/workflows/${{ inputs.script }}
+        ENV_SNAPSHOT: ${{ inputs.snapshot }}
+        ENV_EXCLUDE: ${{ inputs.exclude }}
+      run: ${GITHUB_ACTION_PATH}/src/init.sh
+      shell: bash
+
+branding:
+  color: 'orange'
+  icon: 'archive'
