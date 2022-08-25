@@ -39,18 +39,13 @@ jobs:
           echo 'echo "---- test ----"' > ${TOPATH}${SCRIPTNAME}
           echo ${TOPATH}${SCRIPTNAME}
           cat ${TOPATH}${SCRIPTNAME}
-          
-      - name: another hack which may or may not work
-        run: echo 'sudo() { "$@" ; }' >> /etc/profile
-      
-      - run: sudo echo hi
 
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
       #   cache: It should be the same as the cache 'path'. The default prefix is '${{ runner.temp }}/' for this reason
       #          it's not required in this field.
       - name: Step -> Cache anything
-        uses: airvzxf/cache-anything-new-action@main
+        uses: ./.github/actions/cache-anything-new-action # airvzxf/cache-anything-new-action@main
         with:
           script: 'install.sh'
           is_cached: ${{ steps.cache-id.outputs.cache-hit }}
