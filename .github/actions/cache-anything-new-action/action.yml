@@ -29,6 +29,7 @@ runs:
         chmod 777 "${GITHUB_ACTION_PATH}/src/init.sh"
         chmod 777 "${GITHUB_ACTION_PATH}/src/snapshot.sh"
         chmod 777 "${GITHUB_ACTION_PATH}/src/cache_files.sh"
+      shell: bash
     - env:
         ENV_IS_CACHED: ${{ inputs.is_cached }}
         ENV_RUNNER_TEMP: ${{ runner.temp }}
