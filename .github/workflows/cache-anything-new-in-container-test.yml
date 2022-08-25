@@ -1,4 +1,4 @@
-name: CI - Testing Cache Anything New [in docker container]
+name: cache-anything-new-in-container test
 on:
   workflow_dispatch:
 
