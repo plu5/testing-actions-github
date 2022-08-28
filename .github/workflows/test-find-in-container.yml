@@ -15,3 +15,13 @@ jobs:
       - run: ls -A
 
       - run: find / -type f,l -not \( -path "/__w/_temp*" -prune \) -not \( -path "/boot*" -prune \) -not \( -path "/data*" -prune \) -not \( -path "/dev*" -prune \) -not \( -path "/mnt*" -prune \) -not \( -path "/proc*" -prune \) -not \( -path "/run*" -prune \) -not \( -path "/sys*" -prune \)
+
+  testing_actions2:
+    name: test find not in container
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      
+      - run: ls -A
+      
+      - run: sudo find / -type f,l -not \( -path "/home/runner/work/_temp*" -prune \) -not \( -path "/boot*" -prune \) -not \( -path "/data*" -prune \) -not \( -path "/dev*" -prune \) -not \( -path "/mnt*" -prune \) -not \( -path "/proc*" -prune \) -not \( -path "/run*" -prune \) -not \( -path "/sys*" -prune \)
