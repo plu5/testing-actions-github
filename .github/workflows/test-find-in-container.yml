@@ -1,0 +1,17 @@
+name: test find in container
+on:
+  workflow_dispatch:
+
+jobs:
+  testing_actions:
+    name: test find in container
+    runs-on: 'ubuntu-latest'
+    container: 
+      image: 'ubuntu:16.04'
+      options: --user 0
+    steps:
+      - uses: actions/checkout@v3
+      
+      - run: ls -A
+
+      - run: find / -type f,l -not \( -path "/__w/_temp*" -prune \) -not \( -path "/boot*" -prune \) -not \( -path "/data*" -prune \) -not \( -path "/dev*" -prune \) -not \( -path "/mnt*" -prune \) -not \( -path "/proc*" -prune \) -not \( -path "/run*" -prune \) -not \( -path "/sys*" -prune \)
