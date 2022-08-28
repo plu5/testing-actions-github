@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/cache-directory-example
-          key: cache-anything-new-in-container-test-1.0
+          key: cache-anything-new-in-container-test-2
           
       # Implement the cache anything action.
       #   is_cached: Use the previous cache action id.
