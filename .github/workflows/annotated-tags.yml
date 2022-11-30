@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-      - run: git tag
       - run: git fetch --all --tags
-      - run: git tag
-      - uses: actions/github-script@main
+      - run: git tag -n9
+      - name: ONLY CREATETAG
+        uses: actions/github-script@main
         with:
           script: |
             const tagResponse = await github.rest.git.createTag({
@@ -30,10 +30,10 @@ jobs:
               type: 'commit',
             });
             console.log('tagResponse:'); console.log(tagResponse);
-      - run: git tag
       - run: git fetch --all --tags
-      - run: git tag
-      - uses: actions/github-script@main
+      - run: git tag -n9
+      - name: CREATETAG + CREATEREF ON COMMIT SHA
+        uses: actions/github-script@main
         with:
           script: |
             const tagResponse = await github.rest.git.createTag({
@@ -56,10 +56,10 @@ jobs:
             } catch(err) {
               console.log("ref already exists");
             };
-      - run: git tag
       - run: git fetch --all --tags
-      - run: git tag
-      - uses: actions/github-script@main
+      - run: git tag -n9
+      - name: CREATETAG + CREATEREF ON TAG SHA
+        uses: actions/github-script@main
         with:
           script: |
             const tagResponse = await github.rest.git.createTag({
@@ -83,6 +83,5 @@ jobs:
             } catch(err) {
               console.log("ref already exists");
             };
-      - run: git tag
       - run: git fetch --all --tags
-      - run: git tag
+      - run: git tag -n9
