@@ -7,7 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - runs: git tag
+      - run: git tag
       - uses: actions/github-script@main
         with:
           script: |
@@ -21,7 +21,7 @@ jobs:
             });
             console.log(`tagResponse: ${tagResponse}`);
             console.log(`tagResponse.data.sha: ${tagResponse.data.sha}`);
-      - runs: git tag
+      - run: git tag
       - uses: actions/github-script@main
         with:
           script: |
@@ -41,7 +41,7 @@ jobs:
               ref: 'refs/tags/v1.0.1',
               sha: context.sha,
             });
-      - runs: git tag
+      - run: git tag
       - uses: actions/github-script@main
         with:
           script: |
@@ -61,4 +61,4 @@ jobs:
               ref: 'refs/tags/v1.0.2',
               sha: tagResponse.data.sha,
             });
-      - runs: git tag
+      - run: git tag
