@@ -2,6 +2,8 @@ name: Commit message manipulation
 
 on:
   workflow_dispatch:
+  push:
+    paths: ['edit-this-to-trigger-push-workflows']
 
 jobs:
   test:
