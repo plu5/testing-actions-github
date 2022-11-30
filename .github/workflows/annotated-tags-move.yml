@@ -44,7 +44,7 @@ jobs:
               await github.rest.git.updateRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'tags/${{ inputs.tag1 }}', # !!! note that for updateRef do not pass the "ref/" part
+                ref: 'tags/${{ inputs.tag1 }}', // !!! note that for updateRef do not pass the "ref/" part
                 sha: tagResponse.data.sha,
                 force: true,
               });
