@@ -18,7 +18,7 @@ jobs:
           echo "${{ github.event.head_commit.message }}" > commit_msg
           ANNOTATION=$(tail -n +3 commit_msg)
           echo "Annotation: $ANNOTATION"
-          echo "annotation=$ANNOTATION" >> $GITHUB_OUTPUT
+          echo -e "annotation<<EOF\n${ANNOTATION}\nEOF" >> $GITHUB_OUTPUT
       - name: Release with annotation based on commit message body
         if: inputs.annotation1 != ''
         uses: plu5/automatic-releases-with-sha-action@main
