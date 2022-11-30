@@ -2,6 +2,13 @@ name: Git annotated tags experiments
 
 on:
   workflow_dispatch:
+    inputs:
+      tag1:
+        type: string
+        required: true
+      tag2:
+        type: string
+        required: true
 
 jobs:
   test:
@@ -17,7 +24,7 @@ jobs:
             const tagResponse = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag: 'v1.0.1',
+              tag: '${{ inputs.tag1 }}',
               message: 'hi',
               object: context.sha,
               type: 'commit',
@@ -32,7 +39,7 @@ jobs:
             const tagResponse = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag: 'v1.0.1',
+              tag: '${{ inputs.tag1 }}',
               message: 'hi',
               object: context.sha,
               type: 'commit',
@@ -42,7 +49,7 @@ jobs:
               const refResponse = await github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'refs/tags/v1.0.1',
+                ref: 'refs/tags/${{ inputs.tag1 }}',
                 sha: context.sha,
               });
               console.log('refResponse:'); console.log(refResponse);
@@ -58,7 +65,7 @@ jobs:
             const tagResponse = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag: 'v1.0.2',
+              tag: '${{ inputs.tag2 }}',
               message: 'hi2',
               object: context.sha,
               type: 'commit',
@@ -69,7 +76,7 @@ jobs:
               const refResponse = await github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'refs/tags/v1.0.2',
+                ref: 'refs/tags/${{ inputs.tag2 }}',
                 sha: tagResponse.data.sha,
               });
               console.log('refResponse:'); console.log(refResponse);
