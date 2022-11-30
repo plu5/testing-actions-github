@@ -41,7 +41,7 @@ jobs:
               console.log('refResponse:'); console.log(refResponse);
             } catch(err) {
               console.log("ref already exists, updating it");
-              await github.rest.updateRef({
+              await github.rest.git.updateRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: 'refs/tags/${{ inputs.tag1 }}',
