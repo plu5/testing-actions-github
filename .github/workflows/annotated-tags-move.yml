@@ -1,4 +1,4 @@
-name: Git annotated tags create/move if already exists
+name: Git annotated tags experiments - create/move if already exists
 
 on:
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: '${{ inputs.tag1 }}',
-              message: ${{ inputs.annotation1 }},
+              message: '${{ inputs.annotation1 }}',
               object: context.sha,
               type: 'commit',
             });
