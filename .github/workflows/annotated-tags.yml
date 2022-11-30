@@ -12,7 +12,7 @@ jobs:
       - uses: actions/github-script@main
         with:
           script: |
-            const tagResponse = github.rest.git.createTag({
+            const tagResponse = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: 'v1.0.1',
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/github-script@main
         with:
           script: |
-            const tagResponse = github.rest.git.createTag({
+            const tagResponse = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: 'v1.0.1',
@@ -36,7 +36,7 @@ jobs:
             });
             console.log(`tagResponse: ${tagResponse}`);
             console.log(`tagResponse.data.sha: ${tagResponse.data.sha}`);
-            const refResponse = github.rest.git.createRef({
+            const refResponse = await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: 'refs/tags/v1.0.1',
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/github-script@main
         with:
           script: |
-            const tagResponse = github.rest.git.createTag({
+            const tagResponse = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag: 'v1.0.2',
@@ -57,7 +57,7 @@ jobs:
             });
             console.log(`tagResponse: ${tagResponse}`);
             console.log(`tagResponse.data.sha: ${tagResponse.data.sha}`);
-            const refResponse = github.rest.git.createRef({
+            const refResponse = await github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: 'refs/tags/v1.0.2',
