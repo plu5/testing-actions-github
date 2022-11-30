@@ -9,19 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - run: git tag
-      - uses: actions/github-script@main
-        with:
-          script: |
-            const tagResponse = await github.rest.git.createTag({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag: 'v1.0.1',
-              message: 'hi',
-              object: context.sha,
-              type: 'commit',
-            });
-            console.log(`tagResponse: ${tagResponse}`);
-            console.log(`tagResponse.data.sha: ${tagResponse.data.sha}`);
+      - run: git fetch --all --tags
       - run: git tag
       - uses: actions/github-script@main
         with:
@@ -34,15 +22,35 @@ jobs:
               object: context.sha,
               type: 'commit',
             });
-            console.log(`tagResponse: ${tagResponse}`);
-            console.log(`tagResponse.data.sha: ${tagResponse.data.sha}`);
-            const refResponse = await github.rest.git.createRef({
+            console.log('tagResponse:'); console.log(tagResponse);
+      - run: git tag
+      - run: git fetch --all --tags
+      - run: git tag
+      - uses: actions/github-script@main
+        with:
+          script: |
+            const tagResponse = await github.rest.git.createTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/v1.0.1',
-              sha: context.sha,
+              tag: 'v1.0.1',
+              message: 'hi',
+              object: context.sha,
+              type: 'commit',
             });
-            console.log(`refResponse: ${refResponse}`);
+            console.log('tagResponse:'); console.log(tagResponse);
+            try {
+              const refResponse = await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/v1.0.1',
+                sha: context.sha,
+              });
+              console.log('refResponse:'); console.log(refResponse);
+            } catch(err) {
+              console.log("ref already exists");
+            };
+      - run: git tag
+      - run: git fetch --all --tags
       - run: git tag
       - uses: actions/github-script@main
         with:
@@ -55,13 +63,19 @@ jobs:
               object: context.sha,
               type: 'commit',
             });
-            console.log(`tagResponse: ${tagResponse}`);
+            console.log('tagResponse:'); console.log(tagResponse);
             console.log(`tagResponse.data.sha: ${tagResponse.data.sha}`);
-            const refResponse = await github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/v1.0.2',
-              sha: tagResponse.data.sha,
-            });
-            console.log(`refResponse: ${refResponse}`);
+            try {
+              const refResponse = await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/v1.0.2',
+                sha: tagResponse.data.sha,
+              });
+              console.log('refResponse:'); console.log(refResponse);
+            } catch(err) {
+              console.log("ref already exists");
+            };
+      - run: git tag
+      - run: git fetch --all --tags
       - run: git tag
