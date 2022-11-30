@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@main
       - run: git fetch --all --tags
       - run: git tag -n9
-      - name: ONLY CREATETAG
+      - name: ONLY CREATETAG (${{ inputs.tag1 }})
         uses: actions/github-script@main
         with:
           script: |
@@ -32,7 +32,7 @@ jobs:
             console.log('tagResponse:'); console.log(tagResponse);
       - run: git fetch --all --tags
       - run: git tag -n9
-      - name: CREATETAG + CREATEREF ON COMMIT SHA
+      - name: CREATETAG + CREATEREF ON COMMIT SHA (${{ inputs.tag1 }})
         uses: actions/github-script@main
         with:
           script: |
@@ -58,7 +58,7 @@ jobs:
             };
       - run: git fetch --all --tags
       - run: git tag -n9
-      - name: CREATETAG + CREATEREF ON TAG SHA
+      - name: CREATETAG + CREATEREF ON TAG SHA (${{ inputs.tag2 }})
         uses: actions/github-script@main
         with:
           script: |
