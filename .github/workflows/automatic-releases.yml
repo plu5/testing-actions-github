@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - run: |
+          mkdir dist
           echo "mock artifact 1" > ./dist/mockartifact-${{ inputs.tag1 }}-windows
           echo "mock artifact 2" > ./dist/mockartifact-${{ inputs.tag1 }}-linux
           echo "mock artifact 3" > ./dist/mockartifact-${{ inputs.tag1 }}-macos
