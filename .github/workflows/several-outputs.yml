@@ -1,0 +1,12 @@
+name: Can I push several outputs in one line?
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - id: do
+        run: echo -e "var1=one\nvar2=two" >> $GITHUB_OUTPUT
+      - run: echo "${{ steps.do.outputs.var1 }} and ${{ steps.do.outputs.var2 }}"
