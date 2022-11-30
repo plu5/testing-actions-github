@@ -1,0 +1,30 @@
+name: automatic-releases-with-sha-action tests - autoannotate tag based on push commit message
+
+on:
+  push:
+    paths: ['edit-this-to-trigger-push-workflows']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - id: a
+        run: |
+          mkdir dist
+          echo "mock artifact 1" > ./dist/mockartifact-${{ inputs.tag1 }}-windows
+          echo "mock artifact 2" > ./dist/mockartifact-${{ inputs.tag1 }}-linux
+          echo "mock artifact 3" > ./dist/mockartifact-${{ inputs.tag1 }}-macos
+          echo "${{ github.event.head_commit.message }}" > commit_msg
+          ANNOTATION=$(tail -n +3 commit_msg)
+          echo "Annotation: $ANNOTATION"
+          echo "annotation=$ANNOTATION" >> $GITHUB_OUTPUT
+      - name: Release with annotation based on commit message body
+        if: inputs.annotation1 != ''
+        uses: plu5/automatic-releases-with-sha-action@main
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: autoannotate
+          tag_annotation: ${{ steps.a.outputs.annotation }}
+          prerelease: false
+          files: ./dist/*
