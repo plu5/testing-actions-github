@@ -1,0 +1,12 @@
+name: Can I access on.path.paths?
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ['test.txt']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ on.push.paths }}
