@@ -1,0 +1,16 @@
+name: Can I output an empty variable?
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - id: a
+        run: |
+          echo "empty=" >> $GITHUB_OUTPUT
+          echo "normal=hi" >> $GITHUB_OUTPUT
+      - run: |
+          echo "steps.a.outputs.empty = ${{ steps.a.outputs.empty }}"
+          echo "steps.a.outputs.normal = ${{ steps.a.outputs.normal }}"
