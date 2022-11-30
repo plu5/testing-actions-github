@@ -49,5 +49,5 @@ jobs:
                 force: true,
               });
             };
-      - run: git fetch --all --tags
+      - run: git fetch --all --tags --force
       - run: git tag -n9
