@@ -1,0 +1,38 @@
+name: automatic-releases-with-sha-action tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag1:
+        type: string
+        required: true
+      annotation1:
+        type: string
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - run: |
+          echo "mock artifact 1" > ./dist/mockartifact-${{ inputs.tag1 }}-windows
+          echo "mock artifact 2" > ./dist/mockartifact-${{ inputs.tag1 }}-linux
+          echo "mock artifact 3" > ./dist/mockartifact-${{ inputs.tag1 }}-macos
+      - name: Release with annotation
+        if: inputs.annotation1 != ''
+        uses: plu5/automatic-releases-with-sha-action@main
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: v${{ inputs.tag1 }}
+          tag_annotation: ${{ inputs.annotation1 }}
+          prerelease: false
+          files: ./dist/*
+      - name: Release without annotation
+        if: inputs.annotation1 == ''
+        uses: plu5/automatic-releases-with-sha-action@main
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: v${{ inputs.tag1 }}
+          prerelease: false
+          files: ./dist/*
