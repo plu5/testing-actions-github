@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        echo -e "Full message:\n${{ github.event.head_commit.message }}"
-        TRUNCATED_MESSAGE=$(tail -n +3 "${{ github.event.head_commit.message }}")
-        echo -e "Truncated message:\n$TRUNCATED_MESSAGE"
+          echo -e "Full message:\n${{ github.event.head_commit.message }}"
+          TRUNCATED_MESSAGE=$(tail -n +3 "${{ github.event.head_commit.message }}")
+          echo -e "Truncated message:\n$TRUNCATED_MESSAGE"
