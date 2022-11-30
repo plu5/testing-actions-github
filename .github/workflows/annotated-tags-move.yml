@@ -1,0 +1,53 @@
+name: Git annotated tags create/move if already exists
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag1:
+        type: string
+        required: true
+      annotation1:
+        type: string
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - run: git fetch --all --tags
+      - run: git tag -n9
+      - name: CREATETAG + CREATEREF ON TAG SHA (${{ inputs.tag1 }} - ${{ inputs.annotation1 }})
+        uses: actions/github-script@main
+        with:
+          script: |
+            const tagResponse = await github.rest.git.createTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: '${{ inputs.tag1 }}',
+              message: ${{ inputs.annotation1 }},
+              object: context.sha,
+              type: 'commit',
+            });
+            console.log('tagResponse:'); console.log(tagResponse);
+            console.log(`tagResponse.data.sha: ${tagResponse.data.sha}`);
+            try {
+              const refResponse = await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/${{ inputs.tag1 }}',
+                sha: tagResponse.data.sha,
+              });
+              console.log('refResponse:'); console.log(refResponse);
+            } catch(err) {
+              console.log("ref already exists, updating it");
+              await github.rest.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/${{ inputs.tag1 }}',
+                sha: tagResponse.data.sha,
+                force: true,
+              });
+            };
+      - run: git fetch --all --tags
+      - run: git tag -n9
