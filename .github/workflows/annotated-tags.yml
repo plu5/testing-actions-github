@@ -7,6 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@main
       - run: git tag
       - uses: actions/github-script@main
         with:
@@ -41,6 +42,7 @@ jobs:
               ref: 'refs/tags/v1.0.1',
               sha: context.sha,
             });
+            console.log(`refResponse: ${refResponse}`);
       - run: git tag
       - uses: actions/github-script@main
         with:
@@ -61,4 +63,5 @@ jobs:
               ref: 'refs/tags/v1.0.2',
               sha: tagResponse.data.sha,
             });
+            console.log(`refResponse: ${refResponse}`);
       - run: git tag
