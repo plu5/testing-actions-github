@@ -20,7 +20,6 @@ jobs:
           echo "Annotation: $ANNOTATION"
           echo -e "annotation<<EOF\n${ANNOTATION}\nEOF" >> $GITHUB_OUTPUT
       - name: Release with annotation based on commit message body
-        if: inputs.annotation1 != ''
         uses: plu5/automatic-releases-with-sha-action@main
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
