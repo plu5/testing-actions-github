@@ -34,6 +34,6 @@ jobs:
         uses: plu5/automatic-releases-with-sha-action@main
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: v${{ inputs.tag1 }}
+          automatic_release_tag: ${{ inputs.tag1 }}
           prerelease: false
           files: ./dist/*
