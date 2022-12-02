@@ -1,0 +1,24 @@
+name: automatic-releases-with-sha-action test release with no artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        required: true
+      annotation:
+        type: string
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: plu5/automatic-releases-with-sha-action@main
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: ${{ inputs.tag }}
+          tag_annotation: ${{ inputs.annotation }}
+          prerelease: false
+          files: ./dist/*
