@@ -1,0 +1,33 @@
+name: diff to see whether the version in a package.json changed and get it from there if so
+
+on:
+  push:
+    paths: ['mock-files/package.json']
+
+env:
+  VERSION_FILE: 'mock-files/package.json'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2 # for the diff
+
+      - name: Check whether version changed
+        run: |
+          DIFF=$(git diff -U0 HEAD^ HEAD $VERSION_FILE | grep '"version"')
+          [ -n "$DIFF" ] && VERSION_CHANGED=true || VERSION_CHANGED=false
+          echo "VERSION_CHANGED=$VERSION_CHANGED" >> $GITHUB_ENV
+          echo $VERSION_CHANGED # debug
+
+      - if: env.VERSION_CHANGED == 'true'
+        name: Get version
+        run: |
+          VERSION=`echo $(jq '.version' $VERSION_FILE)`
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo $VERSION # debug
+
+      - if: env.VERSION != ''
+        run: echo $VERSION; echo ${{ env.VERSION }}
