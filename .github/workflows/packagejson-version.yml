@@ -25,7 +25,7 @@ jobs:
       - if: env.VERSION_CHANGED == 'true'
         name: Get version
         run: |
-          VERSION=`echo $(jq '.version' $VERSION_FILE)`
+          VERSION=`echo $(jq -r '.version' $VERSION_FILE)` # -r outputs without surrounding ""
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo $VERSION # debug
 
