@@ -13,5 +13,5 @@ jobs:
     steps:
       - name: Check version
         run: |
-          lsb_release -r -s  # -> 16.04
-          ldd -v             # -> 
+          grep VERSION= /etc/os-release
+          ldd -v
