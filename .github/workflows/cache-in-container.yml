@@ -1,0 +1,31 @@
+name: actions/cache in container
+
+on:
+  workflow_dispatch:
+
+jobs:
+  linux:
+    name: Linux
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:16.04
+      options: --user 0
+    steps:
+      - name: Check version
+        run: |
+          grep VERSION= /etc/os-release
+          ldd --version
+
+      - name: Cache file
+        id: cache-file
+        uses: actions/cache@v3
+        with:
+          path: file
+          key: ${{ runner.os }}-file
+
+      - name: Generate file not not cached
+        if: steps.cache-file.outputs.cache-hit != 'true'
+        run: echo "this is a file" > file
+
+      - name: Use file
+        run: cat file
