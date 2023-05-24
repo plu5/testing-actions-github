@@ -61,6 +61,8 @@ jobs:
           echo "annotation: '${{ needs.data.outputs.annotation }}'"
           echo "prerelease: '${{ needs.data.outputs.prerelease }}'"
           
-      - if: ${{ needs.data.outputs.release }}
+      - if: ${{ needs.data.outputs.release }}  # wrong because it’s a string not boolean
         run: echo "should release"
-    
+
+      - if: needs.data.outputs.release == 'true'
+        run: echo "should release"
