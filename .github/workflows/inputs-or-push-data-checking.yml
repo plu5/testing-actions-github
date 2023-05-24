@@ -1,0 +1,66 @@
+name: Inputs or push data checking
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: SemVer/name of release
+      release:
+        type: boolean
+        required: false
+        default: false
+        description: Publish release
+      annotation:
+        type: string
+        required: false
+        description: Tag annotation
+      prerelease:
+        type: boolean
+        required: false
+        default: true
+        description: Whether release should be marked as prerelease
+  push:
+    paths: ['edit-this-to-trigger-push-workflows']
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.a.outputs.version }}
+      release: ${{ steps.a.outputs.release }}
+      annotation: ${{ steps.a.outputs.annotation }}
+      prerelease: ${{ steps.a.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get inputs
+        id: a
+        run: |
+          VERSION=$(cat $VERSION_FILE | sed "s/__version__ = '//;s/'//")
+          RELEASE=true; PRERELEASE=true
+          if [ -n "${{ inputs.version }}" ]; then
+            VERSION=${{ inputs.version }}; RELEASE=${{ inputs.release }}
+            echo "annotation=${{ inputs.annotation }}" >> $GITHUB_OUTPUT
+            PRERELEASE=${{ inputs.prerelease }}
+          else
+            echo "${{ github.event.head_commit.message }}" > commit_msg
+            echo -e "annotation<<EOF\n$(tail -n +3 commit_msg)\nEOF" >> $GITHUB_OUTPUT
+            if [ $GITHUB_REF == 'refs/heads/main' ]; then PRERELEASE=false; fi
+          fi
+          echo -e "version=$VERSION\nrelease=$RELEASE\nprerelease=$PRERELEASE" >> $GITHUB_OUTPUT
+
+  check:
+    needs: data
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "version: '${{ needs.data.outputs.version }}'"
+          echo "release: '${{ needs.data.outputs.release }}'"
+          echo "annotation: '${{ needs.data.outputs.annotation }}'"
+          echo "prerelease: '${{ needs.data.outputs.prerelease }}'"
+          
+      - if: ${{ needs.data.outputs.release }}
+        run: echo "should release"
+    
