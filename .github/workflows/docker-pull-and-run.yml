@@ -1,0 +1,18 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  linux-build:
+    name: Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull image
+        run: docker pull ubuntu:16.04
+        
+      - name: Run image & check version
+        run: |
+          CMDS="grep VERSION= /etc/os-release
+                ldd --version"
+          docker run --entrypoint=sh ubuntu:16.04 -c "${CMDS//$'\n'/;}"
