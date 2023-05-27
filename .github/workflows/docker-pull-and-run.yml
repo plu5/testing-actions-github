@@ -10,10 +10,10 @@ jobs:
     steps:
       - name: Run image & check version
         run: |
-          # CMDS="grep VERSION= /etc/os-release
-          #       ldd --version"
-          
-          docker run \
-            --entrypoint=bash \
-            ubuntu:16.04 \
-            -c "grep VERSION= /etc/os-release; ldd --version"
+          CMDS="grep VERSION= /etc/os-release
+                ldd --version"
+
+          docker run \             # 1
+            --entrypoint=sh \      # 2
+            ubuntu:16.04 \         # 3
+            -c "${CMDS//$'\n'/;}"  # 4
