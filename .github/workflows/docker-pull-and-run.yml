@@ -13,7 +13,7 @@ jobs:
           CMDS="grep VERSION= /etc/os-release
                 ldd --version"
 
-          docker run \             # 1
-            --entrypoint=sh \      # 2
-            ubuntu:16.04 \         # 3
-            -c "${CMDS//$'\n'/;}"  # 4
+          docker run \
+            --entrypoint=sh \
+            ubuntu:16.04 \
+            -c "${CMDS//$'\n'/;}"
