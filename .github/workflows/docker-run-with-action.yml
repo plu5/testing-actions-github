@@ -1,0 +1,17 @@
+name: Docker run with action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  linux-build:
+    name: Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run image & check version
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ubuntu:16.04
+          run: |
+            grep VERSION= /etc/os-release
+            ldd --version"
