@@ -1,4 +1,4 @@
-name: Build
+name: Docker run with action
 
 on:
   workflow_dispatch:
