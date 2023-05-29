@@ -1,4 +1,4 @@
-name: Docker run with action
+name: Build
 
 on:
   workflow_dispatch:
@@ -8,10 +8,13 @@ jobs:
     name: Linux
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Run image & check version
         uses: addnab/docker-run-action@v3
         with:
           image: ubuntu:16.04
+          options: -v ${{ github.workspace }}:/usr/src/app
           run: |
             grep VERSION= /etc/os-release
             ldd --version
