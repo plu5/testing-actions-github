@@ -9,15 +9,24 @@ on:
         default: true
 
 jobs:
-  test:
+  data:
+    runs-on: ubuntu-latest
+    outputs:
+      some_bool: steps.a.outputs.some_bool
+    steps:
+      - id: a
+        name: get inputs
+        run: echo "some_bool=true" >> $GITHUB_OUTPUT
+
+  test_input:
     runs-on: ubuntu-latest
     steps:
       - name: plain if without condition
-        if: ${{ inputs.some_bool }}
+        if: inputs.some_bool
         run: echo "plain if without condition passes"
 
       - name: curly if without condition
-        if: inputs.some_bool
+        if: ${{ inputs.some_bool }}
         run: echo "curly if without condition passes"
 
       - name: if with unquoted true
@@ -26,4 +35,24 @@ jobs:
 
       - name: if with quoted true
         if: inputs.some_bool == 'true'
+        run: echo "if with quoted true passes"
+
+  test_data_output:
+    needs: data
+    runs-on: ubuntu-latest
+    steps:
+      - name: plain if without condition
+        if: needs.data.outputs.some_bool
+        run: echo "plain if without condition passes"
+
+      - name: curly if without condition
+        if: ${{ needs.data.outputs.some_bool }}
+        run: echo "curly if without condition passes"
+
+      - name: if with unquoted true
+        if: needs.data.outputs.some_bool == true
+        run: echo "if with unquoted true passes"
+
+      - name: if with quoted true
+        if: needs.data.outputs.some_bool == 'true'
         run: echo "if with quoted true passes"
