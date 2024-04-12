@@ -1,0 +1,22 @@
+name: Are workflow dispatch inputs set to default on push, or are they not set?
+# i am guessing the latter
+
+on:
+  workflow_dispatch:
+    inputs:
+      some_bool:
+        type: boolean
+        required: false
+        default: true
+  push:
+    paths: ['edit-this-to-trigger-push-workflows']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - env: 
+          # workaround https://github.com/actions/runner/issues/2831
+          some_bool: ${{ inputs.some_bool }}
+        run: |
+          echo ${{ env.some_bool }}
