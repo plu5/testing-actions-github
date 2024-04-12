@@ -41,6 +41,8 @@ jobs:
     needs: data
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ needs.data.outputs.some_bool }}
+
       - name: plain if without condition
         if: needs.data.outputs.some_bool
         run: echo "plain if without condition passes"
