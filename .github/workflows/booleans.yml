@@ -1,0 +1,29 @@
+name: Testing booleans
+
+on:
+  workflow_dispatch:
+    inputs:
+      some_bool:
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: plain if without condition
+        if: ${{ inputs.some_bool }}
+        run: echo "plain if without condition passes"
+
+      - name: curly if without condition
+        if: inputs.some_bool
+        run: echo "curly if without condition passes"
+
+      - name: if with unquoted true
+        if: inputs.some_bool == true
+        run: echo "if with unquoted true passes"
+
+      - name: if with quoted true
+        if: inputs.some_bool == 'true'
+        run: echo "if with quoted true passes"
