@@ -38,4 +38,10 @@ jobs:
       matrix:
         os: ${{ fromJson(needs.data.outputs.os) }}
     steps:
-      - run: echo ${{ matrix.os }}
+      - id: data
+        run: |
+          [ ${{ matrix.os }} = 'ubuntu-latest' ] && echo -e "name=linux\nartifact=./dist/retype-hacky"
+          [ ${{ matrix.os }} = 'macos-latest' ] && echo -e "name=macos\nartifact=./retype.dmg"
+          [ ${{ matrix.os }} = 'windows-latest' ] && echo -e "name=windows\nartifact=./dist/retype-hacky"
+          
+      - run: echo ${{ matrix.os }}, ${{ steps.data.name }}, ${{ steps.data.artifact }}
