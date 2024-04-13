@@ -32,7 +32,7 @@ jobs:
           - os: windows-latest
             name: windows
         exclude:
-          - name: linux
+          - os: ubuntu-latest
             build_linux: 'false'
     steps:
       - run: echo ${{ matrix.os }}
