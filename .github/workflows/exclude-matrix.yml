@@ -23,7 +23,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        build_linux: ${{ needs.data.outputs.some_bool == 'true' }}
+        # https://github.com/orgs/community/discussions/26253
+        build_linux: ${{ needs.data.outputs.some_bool }}
         include:
           - os: ubuntu-latest
             name: linux
@@ -31,6 +32,6 @@ jobs:
             name: windows
         exclude:
           - name: linux
-            build_linux: false
+            build_linux: 'false'
     steps:
       - run: echo ${{ matrix.os }}
