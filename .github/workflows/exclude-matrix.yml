@@ -3,7 +3,11 @@ name: Exclude matrix
 on:
   workflow_dispatch:
     inputs:
-      some_bool:
+      build_linux:
+        type: boolean
+        required: false
+        default: true
+      build_windows:
         type: boolean
         required: false
         default: true
@@ -17,11 +21,11 @@ jobs:
       - id: a
         name: get inputs
         run: |
-          SOME_BOOL=true
-          if [ -n "${{ inputs.some_bool }}" ]; then
-            SOME_BOOL=${{ inputs.some_bool }}
+          BUILD_LINUX=true; BUILD_WINDOWS=true
+          if [ -n "${{ inputs.build_linux }}" ]; then
+            BUILD_LINUX=${{ inputs.build_linux }}; BUILD_WINDOWS=${{ inputs.build_windows }}
           fi
-          echo "some_bool=$SOME_BOOL" >> $GITHUB_OUTPUT
+          echo -e "build_linux=$BUILD_LINUX\nbuild_windows=$BUILD_WINDOWS" >> $GITHUB_OUTPUT
 
   build:
     needs: data
@@ -30,9 +34,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_linux:
-          - ${{ needs.data.outputs.some_bool }}
+          - ${{ needs.data.outputs.build-linux }}
+        build-windows:
+          - ${{ needs.data.outputs.build-windows }}
         exclude:
           - os: ubuntu-latest
             build_linux: 'false'
+          - os: windows-latest
+            build_windows: 'false'
     steps:
       - run: echo ${{ matrix.os }}
