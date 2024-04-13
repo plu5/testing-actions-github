@@ -1,0 +1,36 @@
+name: Exclude matrix
+
+on:
+  workflow_dispatch:
+    inputs:
+      some_bool:
+        type: boolean
+        required: false
+        default: true
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    outputs:
+      some_bool: ${{ steps.a.outputs.some_bool }}
+    steps:
+      - id: a
+        name: get inputs
+        run: echo "some_bool=true" >> $GITHUB_OUTPUT
+
+  build:
+    needs: data
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build_linux: ${{ needs.data.outputs.some_bool == 'true' }}
+        include:
+          - os: ubuntu-latest
+            name: linux
+          - os: windows-latest
+            name: windows
+        exclude:
+          - name: linux
+            build_linux: false
+    steps:
+      - run: echo ${{ matrix.os }}
