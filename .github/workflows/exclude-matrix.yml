@@ -16,7 +16,8 @@ jobs:
   data:
     runs-on: ubuntu-latest
     outputs:
-      some_bool: ${{ steps.a.outputs.some_bool }}
+      build_linux: ${{ steps.a.outputs.build_linux }}
+      build_windows: ${{ steps.a.outputs.build_windows }}
     steps:
       - id: a
         name: get inputs
