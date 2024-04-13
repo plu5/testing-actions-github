@@ -1,0 +1,101 @@
+name: retype output matrix test
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: SemVer/name of release
+      release:
+        type: boolean
+        required: false
+        default: false
+        description: Publish release
+      annotation:
+        type: string
+        required: false
+        description: Tag annotation
+      prerelease:
+        type: boolean
+        required: false
+        default: true
+        description: If releasing, whether release should be marked prerelease
+      build_linux:
+        type: boolean
+        required: false
+        default: true
+      build_mac:
+        type: boolean
+        required: false
+        default: true
+      build_windows:
+        type: boolean
+        required: false
+        default: true
+  push:
+    paths: ['retype/__init__.py'] # VERSION_FILE
+
+env:
+  VERSION_FILE: 'retype/__init__.py'
+  PYTHON_VERSION: 3.7.9
+  MACOSX_DEPLOYMENT_TARGET: 10.9
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.a.outputs.version }}
+      release: ${{ steps.a.outputs.release }}
+      annotation: ${{ steps.a.outputs.annotation }}
+      prerelease: ${{ steps.a.outputs.prerelease }}
+      os: ${{ steps.a.outputs.os }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get inputs
+        id: a
+        run: |
+          VERSION=$(cat $VERSION_FILE | sed "s/__version__ = '//;s/'//")
+          RELEASE=true; PRERELEASE=true
+          if [ -n "${{ inputs.version }}" ]; then
+            VERSION=${{ inputs.version }}; RELEASE=${{ inputs.release }}
+            echo "annotation=${{ inputs.annotation }}" >> $GITHUB_OUTPUT
+            PRERELEASE=${{ inputs.prerelease }}
+          else
+            echo "${{ github.event.head_commit.message }}" > commit_msg
+            echo -e "annotation<<EOF\n$(tail -n +3 commit_msg)\nEOF" >> $GITHUB_OUTPUT
+            if [ $GITHUB_REF == 'refs/heads/main' ]; then PRERELEASE=false; fi
+          fi
+          echo -e "version=$VERSION\nrelease=$RELEASE\nprerelease=$PRERELEASE" >> $GITHUB_OUTPUT
+
+          arr=()
+          if [ -n "${{ inputs.build_linux }}" ]; then
+            [ ${{ inputs.build_linux }} = 'true' ] && arr+=('ubuntu-latest')
+            [ ${{ inputs.build_macos }} = 'true' ] && arr+=(macos-latest')
+            [ ${{ inputs.build_windows }} = 'true' ] && arr+=('windows-latest')
+          else
+            arr=('ubuntu-latest' 'macos-latest' 'windows-latest')
+          fi
+          s=$(printf ",\"%s\"" "${arr[@]}")
+          echo os=[${s:1}] >> $GITHUB_OUTPUT
+
+  build:
+    needs: data
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ${{ fromJson(needs.data.outputs.os) }}
+    steps:
+      - name: Get name and artifact path for current OS
+        id: os
+        run: |
+          output="name=failed"
+          [ ${{ matrix.os }} = 'ubuntu-latest' ] && output="name=linux\nartifact=./dist/retype-hacky" 
+          [ ${{ matrix.os }} = 'macos-latest' ] && output="name=macos\nartifact=./retype.dmg"
+          [ ${{ matrix.os }} = 'windows-latest' ] && output="name=windows\nartifact=./dist/retype-hacky"
+          echo -e $output >> $GITHUB_OUTPUT
+        shell: bash
+
+      - run: echo retype-${{ needs.data.outputs.version }}-${{ steps.os.outputs.name }}, ${{ steps.os.outputs.artifact }}
+     
