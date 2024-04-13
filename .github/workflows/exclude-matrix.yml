@@ -16,13 +16,19 @@ jobs:
     steps:
       - id: a
         name: get inputs
-        run: echo "some_bool=true" >> $GITHUB_OUTPUT
+        run: |
+          SOME_BOOL=true
+          if [ -n "${{ inputs.some_bool }}" ]; then
+            SOME_BOOL=${{ inputs.some_bool }}
+          fi
+          echo "some_bool=$SOME_BOOL" >> $GITHUB_OUTPUT
 
   build:
     needs: data
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        name: [linux, windows] # has to be here to avoid "Matrix exclude key 'name' does not match any key within the matrix" or w/e key you use in the exclude
         # https://github.com/orgs/community/discussions/26253
         build_linux:
           - ${{ needs.data.outputs.some_bool }}
@@ -32,7 +38,7 @@ jobs:
           - os: windows-latest
             name: windows
         exclude:
-          - os: ubuntu-latest
+          - name: linux
             build_linux: 'false'
     steps:
       - run: echo ${{ matrix.os }}
