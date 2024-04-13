@@ -56,7 +56,7 @@ jobs:
       - name: Get inputs
         id: a
         run: |
-          VERSION=$(cat $VERSION_FILE | sed "s/__version__ = '//;s/'//")
+          # VERSION=$(cat $VERSION_FILE | sed "s/__version__ = '//;s/'//")
           RELEASE=true; PRERELEASE=true
           if [ -n "${{ inputs.version }}" ]; then
             VERSION=${{ inputs.version }}; RELEASE=${{ inputs.release }}
