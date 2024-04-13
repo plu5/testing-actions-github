@@ -46,4 +46,4 @@ jobs:
           [ ${{ matrix.os }} = 'windows-latest' ] && output="name=windows\nartifact=./dist/retype-hacky"
           echo -e $output >> $GITHUB_OUTPUT
 
-      - run: echo ${{ matrix.os }}, ${{ steps.data.name }}, ${{ steps.data.artifact }}
+      - run: echo ${{ matrix.os }}, ${{ steps.data.outputs.name }}, ${{ steps.data.outputs.artifact }}
