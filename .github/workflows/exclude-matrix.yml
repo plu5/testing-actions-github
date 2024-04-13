@@ -35,7 +35,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         build_linux:
           - ${{ needs.data.outputs.build-linux }}
-        build-windows:
+        build_windows:
           - ${{ needs.data.outputs.build-windows }}
         exclude:
           - os: ubuntu-latest
