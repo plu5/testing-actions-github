@@ -24,7 +24,8 @@ jobs:
     strategy:
       matrix:
         # https://github.com/orgs/community/discussions/26253
-        build_linux: ${{ needs.data.outputs.some_bool }}
+        build_linux:
+          - ${{ needs.data.outputs.some_bool }}
         include:
           - os: ubuntu-latest
             name: linux
