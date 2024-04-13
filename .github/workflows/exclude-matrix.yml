@@ -40,8 +40,10 @@ jobs:
     steps:
       - id: data
         run: |
-          [ ${{ matrix.os }} = 'ubuntu-latest' ] && echo -e "name=linux\nartifact=./dist/retype-hacky"
-          [ ${{ matrix.os }} = 'macos-latest' ] && echo -e "name=macos\nartifact=./retype.dmg"
-          [ ${{ matrix.os }} = 'windows-latest' ] && echo -e "name=windows\nartifact=./dist/retype-hacky"
-          
+          output="name=failed"
+          [ ${{ matrix.os }} = 'ubuntu-latest' ] && output="name=linux\nartifact=./dist/retype-hacky" 
+          [ ${{ matrix.os }} = 'macos-latest' ] && output="name=macos\nartifact=./retype.dmg"
+          [ ${{ matrix.os }} = 'windows-latest' ] && output="name=windows\nartifact=./dist/retype-hacky"
+          echo -e $output >> $GITHUB_OUTPUT
+
       - run: echo ${{ matrix.os }}, ${{ steps.data.name }}, ${{ steps.data.artifact }}
