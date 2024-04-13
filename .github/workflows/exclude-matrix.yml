@@ -34,9 +34,9 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_linux:
-          - ${{ needs.data.outputs.build-linux }}
+          - ${{ needs.data.outputs.build_linux }}
         build_windows:
-          - ${{ needs.data.outputs.build-windows }}
+          - ${{ needs.data.outputs.build_windows }}
         exclude:
           - os: ubuntu-latest
             build_linux: 'false'
