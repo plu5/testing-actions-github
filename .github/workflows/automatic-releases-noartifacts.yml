@@ -22,3 +22,4 @@ jobs:
           tag_annotation: ${{ inputs.annotation }}
           prerelease: false
           files: ./dist/*
+          excluded_types: docs chore revert
